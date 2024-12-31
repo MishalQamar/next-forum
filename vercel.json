@@ -1,5 +1,11 @@
 {
-  "buildCommand": "bun run build",
-  "installCommand": "bun install",
-  "startCommand": "bun run start"
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "buildCommand": "npm install --force && npm run build",
+  "installCommand": "npm install --force",
+  "startCommand": "npm run start"
 }
