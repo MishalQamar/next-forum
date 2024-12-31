@@ -1,56 +1,74 @@
 'use client';
 
+import { FieldError } from '@/components/form/field-error';
+import { SubmitButton } from '@/components/form/submit-button';
+import { Form } from '@/components/form/utils/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Job } from '@prisma/client';
-import { upsertJob } from '../actions/upsert-job';
-import { SubmitButton } from '@/components/form/submit-button';
-import { useActionState, useRef } from 'react';
+import Link from 'next/link';
+import { useActionState } from 'react';
+import { signIn } from '../actions/sign-in';
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
-import { FieldError } from '@/components/form/field-error';
 
-import { DatePicker } from '@/components/form/date-picker';
-import { Form } from '@/components/form/utils/form';
-
-type JobUpsertFormProps = {
-  job?: Job;
-};
-
-const JobUpsertForm = ({ job }: JobUpsertFormProps) => {
+const SignInForm = () => {
   const [actionState, action] = useActionState(
-    upsertJob.bind(null, job?.id),
+    signIn,
     EMPTY_ACTION_STATE
   );
-
-  const datePickerRef = useRef<{ reset: () => void }>(null);
-
-  const handleSuccess = () => {
-    datePickerRef.current?.reset();
-  };
-
   return (
-    <Form
-      action={action}
-      actionState={actionState}
-      onSuccess={handleSuccess}
-    >
+    <Form action={action} actionState={actionState}>
       <Label
-        htmlFor="title"
-        className="block text-sm font-medium leading-6 mt-2"
+        htmlFor="email"
+        className="block text-sm font-medium leading-6"
       >
-        Title
+        Email address
       </Label>
+
       <Input
-        id="title"
-        name="title"
-        type="text"
-        defaultValue={
-          (actionState.payload?.get('title') as string) ?? job?.title
-        }
+        id="email"
+        name="email"
+        type="email"
+        required
+        autoComplete="email"
+        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 mt-2"
       />
+      <FieldError actionState={actionState} name="email" />
+
+      <div className="flex items-center justify-between mt-2">
+        <Label
+          htmlFor="password"
+          className="block text-sm font-medium leading-6 mt-2"
+        >
+          Password
+        </Label>
+        <div className="text-sm">
+          <Link href="#" className="font-semibold">
+            Forgot password?
+          </Link>
+        </div>
+      </div>
+
+      <Input
+        id="password"
+        name="password"
+        type="password"
+        required
+        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 mt-2 "
+      />
+
+      <FieldError actionState={actionState} name="password" />
+
+      <SubmitButton label="Sign In" />
+
+      {/* 
       <FieldError actionState={actionState} name="title" />
 
-      <Label htmlFor="content">Content</Label>
+      <Label
+        htmlFor="content"
+        className="block text-sm font-medium leading-6 "
+      >
+        Content
+      </Label>
       <Input
         id="content"
         name="content"
@@ -104,9 +122,9 @@ const JobUpsertForm = ({ job }: JobUpsertFormProps) => {
           <FieldError actionState={actionState} name="salary" />
         </div>
       </div>
-      <SubmitButton label={job ? 'Edit' : 'Create'} />
+      <SubmitButton label={job ? 'Edit' : 'Create'} /> */}
     </Form>
   );
 };
 
-export { JobUpsertForm };
+export { SignInForm };

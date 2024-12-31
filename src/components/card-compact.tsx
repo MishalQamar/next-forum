@@ -9,7 +9,7 @@ import {
 
 type CardCompactProps = {
   title: string;
-  description: string;
+  description?: string;
   className?: string;
   content: React.ReactNode;
   footer?: React.ReactNode;
@@ -30,7 +30,7 @@ const CardCompact = ({
       </CardHeader>
       <CardContent>{content}</CardContent>
       {footer && (
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex justify-center">
           {footer}
         </CardFooter>
       )}
