@@ -1,11 +1,5 @@
 {
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
-    }
-  ],
-  "buildCommand": "npm install --force && npm run build",
-  "installCommand": "npm install --force",
-  "startCommand": "npm run start"
+  "installCommand": "bun install --legacy-peer-deps --no-cache",  
+  "buildCommand": "bun run build",                                 
+  "startCommand": "bun run start"                                 
 }
