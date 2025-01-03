@@ -1,4 +1,6 @@
 import { CardCompact } from '@/components/card-compact';
+import { getAuth } from '@/features/auth/actions/get-auth';
+import { isOwner } from '@/features/auth/utilis/is-owner';
 import { JobUpsertForm } from '@/features/job/components/upsert-form';
 import { getJOb } from '@/features/job/queries/get-job';
 import { notFound } from 'next/navigation';
@@ -12,7 +14,10 @@ type EditPageProps = {
 const EditPage = async ({ params }: EditPageProps) => {
   const jobId = (await params).jobId;
   const job = await getJOb(jobId);
-  if (!job) {
+  const { user } = await getAuth();
+  const isJobOwner = await isOwner(user, job);
+
+  if (!job || !isJobOwner) {
     notFound();
   }
 

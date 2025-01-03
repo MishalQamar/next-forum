@@ -1,4 +1,17 @@
 import prisma from '@/lib/prisma';
+import { hash } from '@node-rs/argon2';
+
+const users = [
+  {
+    username: 'admin',
+    email: 'admin@admin.com',
+  },
+  {
+    username: 'user',
+    // use your own email here
+    email: 'mishalqamar@gmail.com',
+  },
+];
 
 const jobs = [
   {
@@ -26,10 +39,30 @@ const jobs = [
 ];
 
 const seed = async () => {
-  await prisma.job.deleteMany({});
-  await prisma.job.createMany({
-    data: jobs,
+  const t0 = performance.now();
+  console.log('DB Seed: Started ...');
+
+  await prisma.user.deleteMany();
+  await prisma.job.deleteMany();
+
+  const passwordHash = await hash('geheimnis');
+
+  const dbUsers = await prisma.user.createManyAndReturn({
+    data: users.map((user) => ({
+      ...user,
+      passwordHash,
+    })),
   });
+
+  await prisma.job.createMany({
+    data: jobs.map((job) => ({
+      ...job,
+      userId: dbUsers[0].id,
+    })),
+  });
+
+  const t1 = performance.now();
+  console.log(`DB Seed: Finished (${t1 - t0}ms)`);
 };
 
 seed();

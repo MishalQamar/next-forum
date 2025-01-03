@@ -6,6 +6,9 @@ import {
   fromErrorToActionState,
   toActionState,
 } from '@/components/form/utils/to-action-state';
+
+import { getAuthOrRedirect } from '@/features/auth/queries/get-auth-or-redirect';
+import { isOwner } from '@/features/auth/utilis/is-owner';
 import prisma from '@/lib/prisma';
 import { jobPath, jobsPath } from '@/paths';
 import { toCent } from '@/utilis/currency';
@@ -26,7 +29,21 @@ export const upsertJob = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
+  const { user } = await getAuthOrRedirect();
+
   try {
+    if (id) {
+      const job = await prisma.job.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      if (!job || !isOwner(user, job)) {
+        return toActionState('Not authorized', 'ERROR');
+      }
+    }
+
     const data = upsertJobSchema.parse({
       title: formData.get('title'),
       content: formData.get('content'),
@@ -36,6 +53,7 @@ export const upsertJob = async (
 
     const dbData = {
       ...data,
+      userId: user.id,
       salary: toCent(data.salary),
     };
 

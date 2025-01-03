@@ -1,13 +1,17 @@
 import Heading from '@/components/heading';
-import { jobsPath } from '@/paths';
-import Link from 'next/link';
+import { Spinner } from '@/components/spinner';
+import { JobList } from '@/features/job/components/job-list';
+
+import { Suspense } from 'react';
 
 const HomePage = () => {
   return (
     <>
-      <Heading title="Home" description="Find your next job" />
+      <Heading title="Next Job" description="Find your next job" />
       <div className="mx-auto mt-16 flow-root max-w-lg sm:mt-20">
-        <Link href={jobsPath()}>Go to Jobs</Link>
+        <Suspense fallback={<Spinner />}>
+          <JobList />
+        </Suspense>
       </div>
     </>
   );

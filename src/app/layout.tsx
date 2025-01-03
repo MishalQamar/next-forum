@@ -38,6 +38,7 @@ export default function RootLayout({
           <main className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:pb-24 lg:px-8">
             {children}
           </main>
+
           <Toaster />
           <RedirectToast />
         </ThemeProvider>

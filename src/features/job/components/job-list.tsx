@@ -1,8 +1,12 @@
 import { getJobs } from '../queries/get-jobs';
 import { JobItem } from './job-item';
 
-const JobList = async () => {
-  const jobs = await getJobs();
+type JobListProps = {
+  userId?: string;
+};
+
+const JobList = async ({ userId }: JobListProps) => {
+  const jobs = await getJobs(userId);
 
   return (
     <div className="gap-y-2 flex flex-col ">
