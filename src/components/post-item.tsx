@@ -84,7 +84,7 @@ const PostItem = ({
   );
 
   return (
-    <Element id={post.id}>
+    <Element id={post.id} name={post.id}>
       <Card
         className={clsx(
           'p-4 flex-1 flex gap-y-1 gap-x-8 relative',
