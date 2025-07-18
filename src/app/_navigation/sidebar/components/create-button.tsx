@@ -31,9 +31,9 @@ export const CreateButton = () => {
           }
           className="hover:bg-primary/90 hover:text-primary-foreground"
         >
-          {pathname !== '/dashboard'
-            ? 'Reply to discussion'
-            : 'New Discussion'}
+          {pathname === '/dashboard'
+            ? 'New Discussion'
+            : 'Reply to discussion'}
         </Button>
       </SidebarMenuButton>
     </SidebarMenuItem>

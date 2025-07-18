@@ -8,11 +8,11 @@ import {
 import React from 'react';
 
 export const MarkdownToolbar = ({ forId }: { forId: string }) => {
-  const MarkdownToolbarTag = 'markdown-toolbar' as any;
-  const MdBoldTag = 'md-bold' as any;
-  const MdItalicTag = 'md-italic' as any;
-  const MdCodeTag = 'md-code' as any;
-  const MdLinkTag = 'md-link' as any;
+  const MarkdownToolbarTag = 'markdown-toolbar';
+  const MdBoldTag = 'md-bold';
+  const MdItalicTag = 'md-italic';
+  const MdCodeTag = 'md-code';
+  const MdLinkTag = 'md-link';
 
   return React.createElement(
     MarkdownToolbarTag,
