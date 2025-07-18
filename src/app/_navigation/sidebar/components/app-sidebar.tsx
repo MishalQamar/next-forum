@@ -9,7 +9,7 @@ import {
 import { authNavItems, navItems } from '../constants';
 import { SidebarItem } from './sidebar-item';
 import { getAuth } from '@/features/auth/queries/get-auth';
-import { Separator } from '@/components/ui/separator';
+
 import { CreateButton } from './create-button';
 import { Suspense } from 'react';
 
