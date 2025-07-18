@@ -5,18 +5,18 @@ import {
   fromErrorToActionState,
   toActionState,
 } from '@/components/form/utils/to-action-state';
-import prisma from '@/lib/prisma';
-import { jobsPath } from '@/paths';
 
-import { verify } from '@node-rs/argon2';
+import { z } from 'zod';
 
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
+
+import { verifyPasswordHash } from '../utils/hash-verify';
 import {
   generateSessionToken,
   createSession,
-} from '../utilis/session';
-import { setSessionTokenCookie } from '../utilis/session-cookie';
+} from '../utils/session';
+import { setSessionTokenCookie } from '../utils/session-cookie';
+import prisma from '@/lib/prisma';
 
 const signInSchema = z.object({
   email: z
@@ -27,7 +27,7 @@ const signInSchema = z.object({
   password: z.string().min(6).max(191),
 });
 
-export const signIn = async (
+export const logIn = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
@@ -41,20 +41,22 @@ export const signIn = async (
         email,
       },
     });
-
     if (!user) {
       return toActionState(
-        'incorrect password or email',
+        'Incorrect email or password',
         'ERROR',
         formData
       );
     }
 
-    const validPassword = verify(user.passwordHash, password);
+    const validPassword = await verifyPasswordHash(
+      user.passwordHash,
+      password
+    );
 
     if (!validPassword) {
       return toActionState(
-        'incorrect password or email',
+        'Incorrect email or password',
         'ERROR',
         formData
       );
@@ -65,8 +67,8 @@ export const signIn = async (
 
     await setSessionTokenCookie(token, session.expiresAt);
   } catch (error) {
-    fromErrorToActionState(error, formData);
+    return fromErrorToActionState(error, formData);
   }
 
-  redirect(jobsPath());
+  redirect('/');
 };

@@ -1,39 +1,34 @@
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from './ui/card';
 
 type CardCompactProps = {
   title: string;
-  description?: string;
-  className?: string;
+  description: string;
+
   content: React.ReactNode;
-  footer?: React.ReactNode;
+  action: React.ReactNode;
 };
 
 const CardCompact = ({
   title,
   description,
-  className,
   content,
-  footer,
+  action,
 }: CardCompactProps) => {
   return (
-    <Card className={className}>
+    <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>{description} </CardDescription>
+        <CardAction>{action}</CardAction>
       </CardHeader>
       <CardContent>{content}</CardContent>
-      {footer && (
-        <CardFooter className="flex justify-center">
-          {footer}
-        </CardFooter>
-      )}
     </Card>
   );
 };
