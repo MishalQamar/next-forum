@@ -16,6 +16,7 @@ import {
 
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import prisma from '@/lib/prisma';
+import { homePath } from '@/paths';
 
 const registerSchema = z
   .object({
@@ -81,5 +82,5 @@ export const register = async (
     return fromErrorToActionState(error, formData);
   }
 
-  redirect('/');
+  redirect(homePath());
 };

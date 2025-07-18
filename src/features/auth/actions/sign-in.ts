@@ -17,6 +17,7 @@ import {
 } from '../utils/session';
 import { setSessionTokenCookie } from '../utils/session-cookie';
 import prisma from '@/lib/prisma';
+import { homePath } from '@/paths';
 
 const signInSchema = z.object({
   email: z
@@ -72,5 +73,5 @@ export const logIn = async (
     return fromErrorToActionState(error, formData);
   }
 
-  redirect('/');
+  redirect(homePath());
 };
