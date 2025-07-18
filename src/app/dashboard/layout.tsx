@@ -25,7 +25,7 @@ const DashboardLayout = ({
             <AppSidebar />
             <main className="p-6 space-y-3 overflow-y-auto">
               <SidebarTrigger className="mt-[-1.5rem]" />
-              <Header />
+              {/*  <Header /> */}
               {children}
             </main>
             <RedirectToast />
