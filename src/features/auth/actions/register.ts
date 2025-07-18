@@ -73,6 +73,7 @@ export const register = async (
       return toActionState(
         'email or username already in use',
         'ERROR',
+        {},
         formData
       );
     }

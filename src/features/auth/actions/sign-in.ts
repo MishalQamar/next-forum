@@ -45,6 +45,7 @@ export const logIn = async (
       return toActionState(
         'Incorrect email or password',
         'ERROR',
+        {},
         formData
       );
     }
@@ -58,6 +59,7 @@ export const logIn = async (
       return toActionState(
         'Incorrect email or password',
         'ERROR',
+        {},
         formData
       );
     }
