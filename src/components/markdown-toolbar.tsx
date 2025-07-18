@@ -5,27 +5,37 @@ import {
   LucideItalic,
   LucideLink,
 } from 'lucide-react';
+import React from 'react';
 
 export const MarkdownToolbar = ({ forId }: { forId: string }) => {
-  return (
-    /* -ml-1 */
-    <markdown-toolbar for={forId} className="flex items-center ">
-      <md-bold className="cursor-pointer py-1.5 px-1">
-        <LucideBold className="h-4 w-4" />
-      </md-bold>
+  const MarkdownToolbarTag = 'markdown-toolbar' as any;
+  const MdBoldTag = 'md-bold' as any;
+  const MdItalicTag = 'md-italic' as any;
+  const MdCodeTag = 'md-code' as any;
+  const MdLinkTag = 'md-link' as any;
 
-      <md-italic className="cursor-pointer py-1.5 px-1">
-        <LucideItalic className="h-4 w-4" />
-      </md-italic>
-
-      <md-code className="cursor-pointer py-1.5 px-1">
-        <LucideCode className="h-4 w-4" />
-      </md-code>
-      <md-link className="cursor-pointer py-1.5 px-1">
-        <LucideLink className="h-4 w-4" />
-      </md-link>
-
-      {/*   <md-mention>mention</md-mention> */}
-    </markdown-toolbar>
+  return React.createElement(
+    MarkdownToolbarTag,
+    { for: forId, className: 'flex items-center' },
+    React.createElement(
+      MdBoldTag,
+      { className: 'cursor-pointer py-1.5 px-1' },
+      React.createElement(LucideBold, { className: 'h-4 w-4' })
+    ),
+    React.createElement(
+      MdItalicTag,
+      { className: 'cursor-pointer py-1.5 px-1' },
+      React.createElement(LucideItalic, { className: 'h-4 w-4' })
+    ),
+    React.createElement(
+      MdCodeTag,
+      { className: 'cursor-pointer py-1.5 px-1' },
+      React.createElement(LucideCode, { className: 'h-4 w-4' })
+    ),
+    React.createElement(
+      MdLinkTag,
+      { className: 'cursor-pointer py-1.5 px-1' },
+      React.createElement(LucideLink, { className: 'h-4 w-4' })
+    )
   );
 };
