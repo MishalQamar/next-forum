@@ -53,7 +53,7 @@
     "nuqs": "^2.3.0",
     "pluralize": "^8.0.0",
     "react": "^19.0.0",
-    "react-day-picker": "^8.10.1",
+  
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
     "react-mentions": "^4.4.10",
