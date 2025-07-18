@@ -1,3 +1,4 @@
+export const runtime = 'nodejs';
 import { CardCompact } from '@/components/card-compact';
 import { Button } from '@/components/ui/button';
 import { LoginForm } from '@/features/auth/components/login-form';

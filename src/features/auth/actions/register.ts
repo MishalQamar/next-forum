@@ -1,5 +1,4 @@
 'use server';
-export const runtime = 'nodejs';
 
 import { z } from 'zod';
 import { hashPassword } from '../utils/hash-verify';
