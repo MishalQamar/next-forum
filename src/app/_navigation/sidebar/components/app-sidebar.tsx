@@ -12,11 +12,36 @@ import { SidebarItem } from './sidebar-item';
 import { getAuth } from '@/features/auth/queries/get-auth';
 import { Separator } from '@/components/ui/separator';
 import { CreateButton } from './create-button';
+import { Suspense } from 'react';
 
-// Menu items.""
+// ✅ Suspense wrapper for SidebarItems
+function SidebarItemsList() {
+  return (
+    <Suspense fallback={null}>
+      <>
+        {navItems.map((item) => (
+          <SidebarItem key={item.title} item={item} />
+        ))}
+      </>
+    </Suspense>
+  );
+}
+
+function AuthSidebarItems() {
+  return (
+    <Suspense fallback={null}>
+      <>
+        {authNavItems.map((item) => (
+          <SidebarItem key={item.title} item={item} />
+        ))}
+      </>
+    </Suspense>
+  );
+}
 
 export async function AppSidebar() {
   const { user: authUser } = await getAuth();
+
   return (
     <Sidebar className="h-full">
       <SidebarContent>
@@ -27,14 +52,14 @@ export async function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {authUser && <CreateButton />}
-              {navItems.map((item) => (
-                <SidebarItem key={item.title} item={item} />
-              ))}
+
+              {/* ✅ Wrapped nav items in Suspense */}
+              <SidebarItemsList />
+
               <Separator />
-              {authUser &&
-                authNavItems.map((item) => (
-                  <SidebarItem key={item.title} item={item} />
-                ))}
+
+              {/* ✅ Wrapped auth-only nav items in Suspense */}
+              {authUser && <AuthSidebarItems />}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
