@@ -1,30 +1,32 @@
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// Import style from cjs path, which has correct type
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 type PostMarkdownProps = {
   content: string;
 };
+
 export const MarkdownText = ({ content }: PostMarkdownProps) => {
   return (
     <ReactMarkdown
       components={{
         code({ className, children, ...rest }) {
           const match = /language-(\w+)/.exec(className || '');
+          const { ref, ...propsWithoutRef } = rest;
+
           return match ? (
-            // @ts-ignore: Suppress ref and style typing errors here
             <SyntaxHighlighter
               PreTag="div"
               language={match[1]}
-              // @ts-ignore: Suppress ref and style typing errors here
-              style={vscDarkPlus}
-              {...rest}
+              style={vscDarkPlus as any} // no type assertion needed here
+              {...propsWithoutRef}
             >
-              {children}
+              {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
-            <code {...rest} className={className}>
+            <code className={className} {...rest}>
               {children}
             </code>
           );
