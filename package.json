@@ -2,16 +2,18 @@
   "name": "next-job",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "lint-fix": "next lint --fix",
-    "postinstall": "prisma generate",
-    "seed": "tsx prisma/seed.ts",
-    "type": "tsc --noEmit"
-  },
+ "scripts": {
+  "dev": "next dev --turbopack",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "lint-fix": "next lint --fix",
+  "postinstall": "prisma generate",
+  "seed": "tsx prisma/seed.ts",
+  "type": "tsc --noEmit",
+  
+  "vercel-build": "npm install --legacy-peer-deps && next build"
+},
   "dependencies": {
     "@draft-js-plugins/editor": "^4.1.4",
     "@draft-js-plugins/mention": "^5.3.0",
