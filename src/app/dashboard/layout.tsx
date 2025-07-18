@@ -8,6 +8,7 @@ import { CreateDiscussionForm } from '../../features/discussions/components/crea
 
 import { CreatePostForm } from '@/features/posts/components/create-post-form';
 import { RedirectToast } from '@/components/redirect-toast';
+import { Suspense } from 'react';
 
 const DashboardLayout = ({
   children,
@@ -32,7 +33,9 @@ const DashboardLayout = ({
         </div>
       </SidebarProvider>
       <CreateDiscussionForm />
-      <CreatePostForm />
+      <Suspense fallback={null}>
+        <CreatePostForm />
+      </Suspense>
     </>
   );
 };
