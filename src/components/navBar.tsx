@@ -4,8 +4,6 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuItem,
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback } from './ui/avatar';

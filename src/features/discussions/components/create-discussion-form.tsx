@@ -20,9 +20,7 @@ import { MarkdownText } from '@/components/markdown-text';
 
 import { useDiscussionStore } from '../hooks/use-disussion-store';
 import { DiscussionFixedFormWrapper } from './discussion-fixed-form-wrapper';
-import { SubmitButton } from '@/components/submit-button';
-import router from 'next/router';
-import clsx from 'clsx';
+
 import { LucideLoaderCircle } from 'lucide-react';
 
 const MarkdownToolbar = dynamic(
@@ -62,7 +60,7 @@ export const CreateDiscussionForm = () => {
         discussionPath(actionState.data?.discussionId as string)
       );
     }
-  }, [actionState, hideDiscussionForm]);
+  }, [actionState, hideDiscussionForm, router]);
 
   return (
     <DiscussionFixedFormWrapper header="Create Discussion">

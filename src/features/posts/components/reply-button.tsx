@@ -12,7 +12,7 @@ type ReplyButtonProps = {
 
 export const ReplyButton = ({ postId }: ReplyButtonProps) => {
   const showPostForm = usePostStore((state) => state.showPostForm);
-  const [_, setPostId] = useQueryState('postId', postParser);
+  const [, setPostId] = useQueryState('postId', postParser);
 
   const handleReply = () => {
     setPostId(postId);

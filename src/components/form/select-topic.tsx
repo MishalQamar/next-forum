@@ -6,7 +6,6 @@ import {
   SelectItem,
   Select,
 } from '@/components/ui/select';
-import { Prisma } from '@prisma/client';
 
 import { capitalizeFirstLetter } from '@/utils/capitalise-first-letter';
 import { useImperativeHandle, useState } from 'react';
@@ -25,8 +24,7 @@ type SelectTopicProps = {
 
 export const SelectTopic = ({
   imperativeHandleRef,
-  id,
-  name,
+
   defaultValue,
 }: SelectTopicProps) => {
   const topics = useDiscussionStore((state) => state.topics);

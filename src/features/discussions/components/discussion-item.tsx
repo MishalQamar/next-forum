@@ -1,8 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-
-import { Prisma, User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { LucidePin } from 'lucide-react';
 import pluralize from 'pluralize';
 import { deleteDiscussion } from '../actions/delete-discussion';

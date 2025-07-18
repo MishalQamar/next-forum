@@ -31,10 +31,10 @@ export const DiscussionPagination = ({
 
   const prevSearch = useRef(search);
   const prevSelect = useRef(select);
-  const [_, setPostId] = useQueryState('postId', postParser);
+  const [, setPostId] = useQueryState('postId', postParser);
   useEffect(() => {
     setPostId('');
-  }, []);
+  }, [setPostId]);
   useEffect(() => {
     if (
       search === prevSearch.current &&
@@ -45,7 +45,7 @@ export const DiscussionPagination = ({
     prevSelect.current = select;
     prevSearch.current = search;
     setPagination({ ...pagination, page: 0 });
-  }, [search, select, pagination, setPagination]);
+  }, [search, select, pagination, setPagination, setPostId]);
   return (
     <Pagination
       pagination={pagination}

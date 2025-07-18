@@ -2,7 +2,7 @@ import { User } from '@prisma/client';
 
 export const isOwner = (
   authUser: User | null | undefined,
-  entity: String | null | undefined
+  entity: string | null | undefined
 ) => {
   if (!authUser || !entity) {
     return false;

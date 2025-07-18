@@ -23,8 +23,7 @@ import { POSTS_PER_PAGE } from '@/features/discussions/search-params';
 import { goToPostPath } from '@/paths';
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
 import dynamic from 'next/dynamic';
-import { useQueryState } from 'nuqs';
-import page from '@/app/dashboard/page';
+
 import { SubmitButton } from '@/components/submit-button';
 const MarkdownToolbar = dynamic(
   () =>
@@ -59,11 +58,13 @@ export const CreatePostForm = () => {
       setText('');
 
       const { postId, count } = actionState.data;
-      const page = Math.floor((count - 1) / POSTS_PER_PAGE);
+      const page = Math.floor(
+        ((count as number) - 1) / POSTS_PER_PAGE
+      );
 
       router.push(goToPostPath(discussionId, postId as string, page));
     }
-  }, [actionState, hidePostForm]);
+  }, [actionState, hidePostForm, discussionId, router]);
 
   return (
     <PostFixedFormWrapper header="Reply to Discussion">

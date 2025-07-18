@@ -6,7 +6,6 @@ import {
 } from '@/components/ui/sidebar';
 import { CreateDiscussionForm } from '../../features/discussions/components/create-discussion-form';
 
-import { Header } from '@/components/header';
 import { CreatePostForm } from '@/features/posts/components/create-post-form';
 import { RedirectToast } from '@/components/redirect-toast';
 

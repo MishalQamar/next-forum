@@ -1,7 +1,6 @@
 import { FixedFormWrapper } from '@/components/fixed-form-wrapper';
 
 import { usePostStore } from '../hooks/use-post-store';
-import { useDiscussionStore } from '@/features/discussions/hooks/use-disussion-store';
 
 type DiscussionFixedFormWrapperProps = {
   header: string;
@@ -16,9 +15,10 @@ export const PostFixedFormWrapper = ({
   return (
     <FixedFormWrapper
       header={header}
-      children={children}
       visible={visible}
       hideForm={hidePostForm}
-    />
+    >
+      {children}
+    </FixedFormWrapper>
   );
 };

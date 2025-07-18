@@ -16,9 +16,10 @@ export const DiscussionFixedFormWrapper = ({
   return (
     <FixedFormWrapper
       header={header}
-      children={children}
       visible={visible}
       hideForm={hideDiscussionForm}
-    />
+    >
+      {children}
+    </FixedFormWrapper>
   );
 };

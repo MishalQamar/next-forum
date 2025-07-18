@@ -12,9 +12,6 @@ import pluralize from 'pluralize';
 
 import { LucidePin } from 'lucide-react';
 import Link from 'next/link';
-import { useQueryState } from 'nuqs';
-import { postParser } from '../search-params';
-import { useEffect } from 'react';
 
 type DiscussionProps = {
   discussion: Prisma.DiscussionGetPayload<{
