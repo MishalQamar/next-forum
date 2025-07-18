@@ -13,9 +13,11 @@ export const MarkdownText = ({ content }: PostMarkdownProps) => {
         code({ className, children, ...rest }) {
           const match = /language-(\w+)/.exec(className || '');
           return match ? (
+            // @ts-ignore: Suppress ref and style typing errors here
             <SyntaxHighlighter
               PreTag="div"
               language={match[1]}
+              // @ts-ignore: Suppress ref and style typing errors here
               style={vscDarkPlus}
               {...rest}
             >
