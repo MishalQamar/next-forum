@@ -8,11 +8,11 @@
   "start": "next start",
   "lint": "next lint",
   "lint-fix": "next lint --fix",
-  "postinstall": "prisma generate",
+  "postinstall": "bun install --force && prisma generate",
   "seed": "tsx prisma/seed.ts",
-  "type": "tsc --noEmit",
+  "type": "tsc --noEmit"
   
-  "vercel-build": "npm install --legacy-peer-deps && next build"
+
 },
   "dependencies": {
     "@draft-js-plugins/editor": "^4.1.4",
