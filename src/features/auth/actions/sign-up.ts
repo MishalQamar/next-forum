@@ -79,5 +79,5 @@ export const signUp = async (
     return fromErrorToActionState(error, formData);
   }
 
-  return redirect(homePath());
+  redirect(homePath());
 };

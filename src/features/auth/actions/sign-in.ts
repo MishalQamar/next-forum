@@ -61,5 +61,5 @@ export const signIn = async (
     return fromErrorToActionState(error, formData);
   }
 
-  return redirect(homePath());
+  redirect(homePath());
 };

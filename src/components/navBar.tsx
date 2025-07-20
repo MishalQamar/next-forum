@@ -28,22 +28,11 @@ export const NavBar = async () => {
 
       <div>
         {user ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Avatar className="cursor-pointer">
-                <AvatarFallback>
-                  {getInitials(user.username)}
-                </AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="start">
-              <DropdownMenuItem asChild>
-                <form action={signOut}>
-                  <button>Sign out</button>
-                </form>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Button asChild>
+            <form action={signOut}>
+              <button>Sign out</button>
+            </form>
+          </Button>
         ) : (
           <div className="space-x-4">
             <Button asChild>

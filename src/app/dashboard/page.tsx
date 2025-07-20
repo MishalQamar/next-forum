@@ -24,6 +24,7 @@ async function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <>
+      {/* <NavBar /> */}
       <Header />
       {discussions.map((discussion) => (
         <DiscussionPreview
