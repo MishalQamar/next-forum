@@ -72,9 +72,7 @@ export const signUp = async (
     ) {
       return toActionState(
         'email or username already in use',
-        'ERROR',
-
-        formData
+        'ERROR'
       );
     }
 

@@ -1,8 +1,8 @@
 import { CardCompact } from '@/components/card-compact';
 import { Button } from '@/components/ui/button';
-import { LoginForm } from '@/features/auth/components/login-form';
+import { SignInForm } from '@/features/auth/components/sign-in-form';
+import { signInPath } from '@/paths';
 
-import { registerPath } from '@/paths';
 import Link from 'next/link';
 
 function LoginPage() {
@@ -11,10 +11,10 @@ function LoginPage() {
       <CardCompact
         title="Log in to your account"
         description="Enter your email below to log in to your account"
-        content={<LoginForm />}
+        content={<SignInForm />}
         action={
           <Button variant="link" asChild>
-            <Link href={registerPath()}>Register</Link>
+            <Link href={signInPath()}>Register</Link>
           </Button>
         }
       />

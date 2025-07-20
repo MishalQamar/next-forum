@@ -7,11 +7,10 @@ import { getPosts } from '@/features/posts/queries/get-posts';
 import { SearchParams } from 'nuqs';
 
 import { PostList } from '@/features/posts/components/post-list';
-import { getAuth } from '@/features/auth/queries/get-auth';
-
-import { isOwner } from '@/features/auth/utils/is-owner';
 
 import { DiscussionItem } from '@/features/discussions/components/discussion-item';
+import { getAuth } from '@/features/auth/actions/get-auth';
+import { isOwner } from '@/features/auth/utilis/is-owner';
 
 type DiscussionPageProps = {
   params: Promise<{

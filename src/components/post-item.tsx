@@ -14,7 +14,6 @@ import { MarkdownText } from './markdown-text';
 import { ReplyButton } from '@/features/posts/components/reply-button';
 import { Element } from 'react-scroll';
 
-import { isOwner } from '@/features/auth/utils/is-owner';
 import { useState } from 'react';
 import { EditPostForm } from '@/features/posts/components/edit-post-form';
 import { deletePost } from '@/features/posts/actions/delete-post';
@@ -22,6 +21,7 @@ import { Button } from './ui/button';
 import { markPostAsBestAnswer } from '@/features/discussions/actions/mark-post-as-best-answer';
 import clsx from 'clsx';
 import { ActionButton } from './action-button';
+import { isOwner } from '@/features/auth/utilis/is-owner';
 type PostItemProps = {
   post: Prisma.PostGetPayload<{
     include: {

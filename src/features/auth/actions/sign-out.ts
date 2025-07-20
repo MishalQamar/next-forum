@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 
-import { homePath, signInPath } from '@/paths';
+import { signInPath } from '@/paths';
 import { invalidateSession } from '../utilis/session';
 import { deleteSessionTokenCookie } from '../utilis/session-cookie';
 import { getAuth } from './get-auth';
@@ -13,8 +13,8 @@ export const signOut = async () => {
   if (!session) {
     redirect(signInPath());
   }
+  console.log('signing out');
 
   await invalidateSession(session.id);
   await deleteSessionTokenCookie();
-  redirect(homePath());
 };

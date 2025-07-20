@@ -1,7 +1,6 @@
 'use client';
 
 import { FieldError } from '@/components/form/field-error';
-import { SubmitButton } from '@/components/form/submit-button';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +9,7 @@ import { useActionState } from 'react';
 
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
 import { signIn } from '../actions/sign-in';
+import { SubmitButton } from '@/components/submit-button';
 
 const SignInForm = () => {
   const [actionState, action] = useActionState(

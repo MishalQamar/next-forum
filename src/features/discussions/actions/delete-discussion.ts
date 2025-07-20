@@ -1,8 +1,9 @@
 'use server';
 
 import { toActionState } from '@/components/form/utils/to-action-state';
-import { getAuth } from '@/features/auth/queries/get-auth';
-import { isOwner } from '@/features/auth/utils/is-owner';
+import { getAuth } from '@/features/auth/actions/get-auth';
+import { isOwner } from '@/features/auth/utilis/is-owner';
+
 import prisma from '@/lib/prisma';
 import { homePath } from '@/paths';
 import { setCookieByKey } from '@/utils/cookies';
