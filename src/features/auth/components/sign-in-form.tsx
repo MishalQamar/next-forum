@@ -4,7 +4,7 @@ import { FieldError } from '@/components/form/field-error';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
+
 import { useActionState } from 'react';
 
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
@@ -42,11 +42,6 @@ const SignInForm = () => {
         >
           Password
         </Label>
-        <div className="text-sm">
-          <Link href="#" className="font-semibold">
-            Forgot password?
-          </Link>
-        </div>
       </div>
 
       <Input

@@ -9,13 +9,12 @@ import prisma from '@/lib/prisma';
 import { homePath } from '@/paths';
 import { redirect } from 'next/navigation';
 import z from 'zod';
-
+import { verifyPasswordHash } from '../utilis/hash-verfiy';
 import {
-  generateSessionToken,
   createSession,
+  generateSessionToken,
 } from '../utilis/session';
 import { setSessionTokenCookie } from '../utilis/session-cookie';
-import { verifyPasswordHash } from '../utilis/hash-verfiy';
 
 const signInSchema = z.object({
   email: z
@@ -36,12 +35,16 @@ export const signIn = async (
     );
 
     const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
+      where: { email },
     });
+
     if (!user) {
-      return toActionState('Incorrect email or password', 'ERROR');
+      return toActionState(
+        'Incorrect email or password',
+        'ERROR',
+        undefined,
+        formData
+      );
     }
 
     const validPassword = await verifyPasswordHash(
@@ -50,13 +53,18 @@ export const signIn = async (
     );
 
     if (!validPassword) {
-      return toActionState('Incorrect email or password', 'ERROR');
+      return toActionState(
+        'Incorrect email or password',
+        'ERROR',
+        undefined,
+        formData
+      );
     }
 
-    const token = generateSessionToken();
-    const session = await createSession(token, user.id);
+    const sessionToken = generateSessionToken();
+    const session = await createSession(sessionToken, user.id);
 
-    await setSessionTokenCookie(token, session.expiresAt);
+    await setSessionTokenCookie(sessionToken, session.expiresAt);
   } catch (error) {
     return fromErrorToActionState(error, formData);
   }
