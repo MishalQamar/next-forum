@@ -9,12 +9,11 @@ import {
   DropdownMenuItem,
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback } from './ui/avatar';
-import { loginPath, registerPath } from '@/paths';
 
 import { getInitials } from '@/utils/get-initials';
-import { logOut } from '@/features/auth/actions/log-out';
-
-import { getAuth } from '@/features/auth/queries/get-auth';
+import { getAuth } from '@/features/auth/actions/get-auth';
+import { signOut } from '@/features/auth/actions/sign-out';
+import { signInPath, signUpPath } from '@/paths';
 
 export const NavBar = async () => {
   const { user } = await getAuth();
@@ -38,7 +37,7 @@ export const NavBar = async () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="start">
               <DropdownMenuItem asChild>
-                <form action={logOut}>
+                <form action={signOut}>
                   <Button type="submit" variant="ghost">
                     Sign Out
                   </Button>
@@ -49,10 +48,10 @@ export const NavBar = async () => {
         ) : (
           <div className="space-x-4">
             <Button asChild>
-              <Link href={loginPath()}>Login</Link>
+              <Link href={signInPath()}>Login</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={registerPath()}>Register</Link>
+              <Link href={signUpPath()}>Register</Link>
             </Button>
           </div>
         )}

@@ -1,22 +1,21 @@
 'use server';
 
-import { z } from 'zod';
-import { hashPassword } from '../utils/hash-verify';
+import {
+  ActionState,
+  toActionState,
+  fromErrorToActionState,
+} from '@/components/form/utils/to-action-state';
+import prisma from '@/lib/prisma';
+import { homePath } from '@/paths';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { redirect } from 'next/navigation';
+import z from 'zod';
+import { hashPassword } from '../utilis/hash-verfiy';
 import {
   generateSessionToken,
   createSession,
-} from '../utils/session';
-import { setSessionTokenCookie } from '../utils/session-cookie';
-import { redirect } from 'next/navigation';
-import {
-  ActionState,
-  fromErrorToActionState,
-  toActionState,
-} from '@/components/form/utils/to-action-state';
-
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import prisma from '@/lib/prisma';
-import { homePath } from '@/paths';
+} from '../utilis/session';
+import { setSessionTokenCookie } from '../utilis/session-cookie';
 
 const registerSchema = z
   .object({
@@ -45,7 +44,7 @@ const registerSchema = z
     }
   });
 
-export const register = async (
+export const signUp = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
@@ -74,7 +73,7 @@ export const register = async (
       return toActionState(
         'email or username already in use',
         'ERROR',
-        undefined,
+
         formData
       );
     }
@@ -82,5 +81,5 @@ export const register = async (
     return fromErrorToActionState(error, formData);
   }
 
-  return redirect(homePath());
+  redirect(homePath());
 };

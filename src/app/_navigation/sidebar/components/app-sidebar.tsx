@@ -8,10 +8,10 @@ import {
 } from '@/components/ui/sidebar';
 import { authNavItems, navItems } from '../constants';
 import { SidebarItem } from './sidebar-item';
-import { getAuth } from '@/features/auth/queries/get-auth';
 
 import { CreateButton } from './create-button';
 import { Suspense } from 'react';
+import { getAuth } from '@/features/auth/actions/get-auth';
 
 export async function AppSidebar() {
   const { user: authUser } = await getAuth();

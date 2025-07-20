@@ -2,22 +2,20 @@
 
 import {
   ActionState,
-  fromErrorToActionState,
   toActionState,
+  fromErrorToActionState,
 } from '@/components/form/utils/to-action-state';
-
-import { z } from 'zod';
-
+import prisma from '@/lib/prisma';
+import { homePath } from '@/paths';
 import { redirect } from 'next/navigation';
+import z from 'zod';
 
-import { verifyPasswordHash } from '../utils/hash-verify';
 import {
   generateSessionToken,
   createSession,
-} from '../utils/session';
-import { setSessionTokenCookie } from '../utils/session-cookie';
-import prisma from '@/lib/prisma';
-import { homePath } from '@/paths';
+} from '../utilis/session';
+import { setSessionTokenCookie } from '../utilis/session-cookie';
+import { verifyPasswordHash } from '../utilis/hash-verfiy';
 
 const signInSchema = z.object({
   email: z
@@ -28,7 +26,7 @@ const signInSchema = z.object({
   password: z.string().min(6).max(191),
 });
 
-export const logIn = async (
+export const signIn = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
@@ -43,12 +41,7 @@ export const logIn = async (
       },
     });
     if (!user) {
-      return toActionState(
-        'Incorrect email or password',
-        'ERROR',
-        undefined,
-        formData
-      );
+      return toActionState('Incorrect email or password', 'ERROR');
     }
 
     const validPassword = await verifyPasswordHash(
@@ -57,12 +50,7 @@ export const logIn = async (
     );
 
     if (!validPassword) {
-      return toActionState(
-        'Incorrect email or password',
-        'ERROR',
-        undefined,
-        formData
-      );
+      return toActionState('Incorrect email or password', 'ERROR');
     }
 
     const token = generateSessionToken();
@@ -73,5 +61,5 @@ export const logIn = async (
     return fromErrorToActionState(error, formData);
   }
 
-  return redirect(homePath());
+  redirect(homePath());
 };

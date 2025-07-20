@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
+import { getAuth } from '../actions/get-auth';
 import { User } from '@prisma/client';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { getAuth } from '../queries/get-auth';
 
-const useAuth = () => {
+export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [isFetched, setFetched] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
 
   const pathname = usePathname();
 
@@ -13,13 +13,10 @@ const useAuth = () => {
     const fetchUser = async () => {
       const { user } = await getAuth();
       setUser(user);
-      setFetched(true);
+      setIsFetched(true);
     };
-
     fetchUser();
   }, [pathname]);
 
   return { user, isFetched };
 };
-
-export { useAuth };

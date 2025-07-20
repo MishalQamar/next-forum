@@ -7,23 +7,12 @@ import { Session, User } from '@prisma/client';
 import { sha256 } from '@oslojs/crypto/sha2';
 import prisma from '@/lib/prisma';
 
-/* export function generateSessionToken(): string {
+export function generateSessionToken(): string {
   const bytes = new Uint8Array(20);
   crypto.getRandomValues(bytes);
   const token = encodeBase32LowerCaseNoPadding(bytes);
   return token;
-} */
-
-export function generateSessionToken(): string {
-  const bytes = new Uint8Array([
-    183, 26, 204, 92, 48, 9, 231, 111, 144, 245, 66, 29, 221, 31, 83,
-    60, 172, 205, 44, 17,
-  ]);
-
-  const token = encodeBase32LowerCaseNoPadding(bytes);
-  return token;
 }
-
 export async function createSession(token: string, userId: string) {
   const sessionId = encodeHexLowerCase(
     sha256(new TextEncoder().encode(token))

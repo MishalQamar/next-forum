@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { cache } from 'react';
-import { validateSessionToken } from '../utils/session';
+import { validateSessionToken } from '../utilis/session';
 
 export const getAuth = cache(async () => {
   const token = (await cookies()).get('session')?.value ?? null;

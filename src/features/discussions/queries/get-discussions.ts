@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma';
 import { ParsedSearchParams } from '../search-params';
-
-import { getAuth } from '@/features/auth/queries/get-auth';
+import { getAuth } from '@/features/auth/actions/get-auth';
 
 export const getDiscussions = async (
   parsedSearchParams: ParsedSearchParams
