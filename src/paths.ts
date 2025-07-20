@@ -1,12 +1,12 @@
 import { serialize } from './features/discussions/search-params';
 
-export const signInPath = () => ' /login';
-export const signUpPath = () => '/register';
+export const homePath = () => '/dashboard';
+
+export const signUpPath = () => '/sign-up';
+export const signInPath = () => '/sign-in';
 
 export const discussionPath = (discussionId: string) =>
   `/dashboard/${discussionId}`;
-
-export const homePath = () => '/dashboard';
 
 export const noRepliesPath = () =>
   serialize(homePath(), { noreplies: true });
