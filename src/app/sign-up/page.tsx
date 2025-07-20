@@ -1,7 +1,7 @@
 import { CardCompact } from '@/components/card-compact';
 import { Button } from '@/components/ui/button';
 import { SignUpForm } from '@/features/auth/components/sign-up-form';
-import { signUpPath } from '@/paths';
+import { signInPath } from '@/paths';
 
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ function RegisterPage() {
         content={<SignUpForm />}
         action={
           <Button variant="link" asChild>
-            <Link href={signUpPath()}>Log in</Link>
+            <Link href={signInPath()}>Log in</Link>
           </Button>
         }
       />

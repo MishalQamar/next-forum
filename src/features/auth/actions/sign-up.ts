@@ -16,6 +16,7 @@ import {
   generateSessionToken,
 } from '../utilis/session';
 import { setSessionTokenCookie } from '../utilis/session-cookie';
+import console from 'console';
 
 const signUpSchema = z
   .object({
@@ -73,10 +74,7 @@ export const signUp = async (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === 'P2002'
     ) {
-      return toActionState(
-        'Either email or username is already in use',
-        'ERROR'
-      );
+      return console.log('error', error);
     }
 
     return fromErrorToActionState(error, formData);
