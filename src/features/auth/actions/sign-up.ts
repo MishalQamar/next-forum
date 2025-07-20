@@ -16,7 +16,6 @@ import {
   generateSessionToken,
 } from '../utilis/session';
 import { setSessionTokenCookie } from '../utilis/session-cookie';
-import console from 'console';
 
 const signUpSchema = z
   .object({
@@ -50,35 +49,75 @@ export const signUp = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
+  console.log('signUp started');
+
+  let parsedData;
   try {
-    const { username, email, password } = signUpSchema.parse(
-      Object.fromEntries(formData)
-    );
+    console.log('Parsing form data...');
+    parsedData = signUpSchema.parse(Object.fromEntries(formData));
+    console.log('Parsed data:', parsedData);
+  } catch (parseError) {
+    console.error('Zod validation error:', parseError);
+    return fromErrorToActionState(parseError);
+  }
 
-    const passwordHash = await hashPassword(password);
+  const { username, email, password } = parsedData;
 
-    const user = await prisma.user.create({
+  let passwordHash;
+  try {
+    console.log('Hashing password...');
+    passwordHash = await hashPassword(password);
+    console.log('Password hashed.');
+  } catch (hashError) {
+    console.error('Error hashing password:', hashError);
+    return fromErrorToActionState(hashError);
+  }
+
+  let user;
+  try {
+    console.log('Creating user in database...');
+    user = await prisma.user.create({
       data: {
         username,
         email,
         passwordHash,
       },
     });
-
-    const sessionToken = generateSessionToken();
-    const session = await createSession(sessionToken, user.id);
-
-    await setSessionTokenCookie(sessionToken, session.expiresAt);
-  } catch (error) {
+    console.log('User created:', user);
+  } catch (dbError) {
+    console.error('Database error:', dbError);
     if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === 'P2002'
+      dbError instanceof Prisma.PrismaClientKnownRequestError &&
+      dbError.code === 'P2002'
     ) {
       return toActionState('User or email already exists', 'ERROR');
-    } else {
-      return fromErrorToActionState(error);
     }
+    return fromErrorToActionState(dbError);
   }
 
+  let sessionToken, session;
+  try {
+    console.log('Generating session token...');
+    sessionToken = generateSessionToken();
+    console.log('Session token generated:', sessionToken);
+
+    console.log('Creating session...');
+    session = await createSession(sessionToken, user.id);
+    console.log('Session created:', session);
+  } catch (sessionError) {
+    console.error('Session creation error:', sessionError);
+    return fromErrorToActionState(sessionError);
+  }
+
+  try {
+    console.log('Setting session cookie...');
+    await setSessionTokenCookie(sessionToken, session.expiresAt);
+    console.log('Session cookie set.');
+  } catch (cookieError) {
+    console.error('Error setting cookie:', cookieError);
+    return fromErrorToActionState(cookieError);
+  }
+
+  console.log('Redirecting to home path...');
   redirect(homePath());
 };
