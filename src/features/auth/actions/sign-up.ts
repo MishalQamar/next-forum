@@ -75,9 +75,7 @@ export const signUp = async (
     ) {
       return toActionState(
         'Either email or username is already in use',
-        'ERROR',
-        undefined,
-        formData
+        'ERROR'
       );
     }
 

@@ -37,6 +37,3 @@ export const NavBar = async () => {
     </header>
   );
 };
-
-/* 
-When you change cookies in Next.js App Router, it invalidates any server component that depends on them. Next.js will re-render those on the server automatically. */

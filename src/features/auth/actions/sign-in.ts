@@ -39,12 +39,7 @@ export const signIn = async (
     });
 
     if (!user) {
-      return toActionState(
-        'Incorrect email or password',
-        'ERROR',
-        undefined,
-        formData
-      );
+      return toActionState('Incorrect email or password', 'ERROR');
     }
 
     const validPassword = await verifyPasswordHash(
@@ -53,12 +48,7 @@ export const signIn = async (
     );
 
     if (!validPassword) {
-      return toActionState(
-        'Incorrect email or password',
-        'ERROR',
-        undefined,
-        formData
-      );
+      return toActionState('Incorrect email or password', 'ERROR');
     }
 
     const sessionToken = generateSessionToken();
