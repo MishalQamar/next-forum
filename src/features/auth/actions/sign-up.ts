@@ -74,7 +74,9 @@ export const signUp = async (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === 'P2002'
     ) {
-      return console.log('error', error);
+      return toActionState('User or email already exists', 'ERROR');
+    } else {
+      return fromErrorToActionState(error);
     }
   }
 
