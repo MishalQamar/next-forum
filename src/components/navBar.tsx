@@ -2,20 +2,10 @@
 
 import Link from 'next/link';
 import { Button } from './ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from './ui/dropdown-menu';
-import { Avatar, AvatarFallback } from './ui/avatar';
 
-import { getInitials } from '@/utils/get-initials';
 import { getAuth } from '@/features/auth/actions/get-auth';
 import { signOut } from '@/features/auth/actions/sign-out';
 import { signInPath, signUpPath } from '@/paths';
-import { SubmitButton } from './submit-button';
-
 export const NavBar = async () => {
   const { user } = await getAuth();
 
