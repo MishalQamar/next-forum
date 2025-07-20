@@ -76,8 +76,6 @@ export const signUp = async (
     ) {
       return console.log('error', error);
     }
-
-    return fromErrorToActionState(error, formData);
   }
 
   redirect(homePath());
