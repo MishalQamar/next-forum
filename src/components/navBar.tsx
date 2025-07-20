@@ -14,6 +14,7 @@ import { getInitials } from '@/utils/get-initials';
 import { getAuth } from '@/features/auth/actions/get-auth';
 import { signOut } from '@/features/auth/actions/sign-out';
 import { signInPath, signUpPath } from '@/paths';
+import { SubmitButton } from './submit-button';
 
 export const NavBar = async () => {
   const { user } = await getAuth();
@@ -38,9 +39,7 @@ export const NavBar = async () => {
             <DropdownMenuContent className="w-56" align="start">
               <DropdownMenuItem asChild>
                 <form action={signOut}>
-                  <Button type="submit" variant="ghost">
-                    Sign Out
-                  </Button>
+                  <button>Sign out</button>
                 </form>
               </DropdownMenuItem>
             </DropdownMenuContent>
