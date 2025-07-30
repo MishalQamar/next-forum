@@ -1,17 +1,15 @@
-import { createDiscussionData } from '@/features/discussions/types';
-import { createPostData } from '@/features/posts/types';
 import { ZodError } from 'zod';
 
-export type ActionState = {
+export type ActionState<TData = unknown> = {
   message: string;
   payload?: FormData;
   fieldErrors: Record<string, string[] | undefined>;
   status?: 'SUCCESS' | 'ERROR';
   timeStamp: number;
-  data?: createPostData | createDiscussionData;
+  data?: TData;
 };
 
-export const EMPTY_ACTION_STATE: ActionState = {
+export const EMPTY_ACTION_STATE: ActionState<undefined> = {
   message: '',
   fieldErrors: {},
   timeStamp: Date.now(),
@@ -20,7 +18,7 @@ export const EMPTY_ACTION_STATE: ActionState = {
 export const fromErrorToActionState = (
   error: unknown,
   formData?: FormData
-): ActionState => {
+): ActionState<undefined> => {
   if (error instanceof ZodError) {
     return {
       message: '',
@@ -48,12 +46,12 @@ export const fromErrorToActionState = (
   }
 };
 
-export const toActionState = (
+export const toActionState = <TData>(
   message: string,
-  status: ActionState['status'],
-  data?: ActionState['data'],
+  status: ActionState<TData>['status'],
+  data?: ActionState<TData>['data'],
   formData?: FormData
-): ActionState => {
+): ActionState<TData> => {
   return {
     message,
     fieldErrors: {},

@@ -7,7 +7,7 @@ import { ActionState } from './form/utils/to-action-state';
 
 type ActionButtonProps = {
   text: string;
-  action: () => Promise<ActionState>;
+  action: () => Promise<ActionState<unknown>>;
 };
 export const ActionButton = ({ text, action }: ActionButtonProps) => {
   const [isPending, startTransition] = useTransition();

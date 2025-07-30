@@ -1,3 +1,3 @@
 export type createDiscussionData = {
-  discussionId: string;
+  discussionId?: string;
 };

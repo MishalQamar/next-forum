@@ -117,7 +117,7 @@ export const signUp = async (
     console.error('Error setting cookie:', cookieError);
     return fromErrorToActionState(cookieError);
   }
- 
+
   console.log('Redirecting to home path...');
   redirect(homePath());
 };

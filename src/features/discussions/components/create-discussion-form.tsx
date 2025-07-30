@@ -5,7 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { FieldError } from '@/components/form/field-error';
-import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
+import {
+  ActionState,
+  EMPTY_ACTION_STATE,
+} from '@/components/form/utils/to-action-state';
 import { useActionState, useEffect, useRef, useState } from 'react';
 import { createDisucssion } from '../actions/create-discussion';
 import dynamic from 'next/dynamic';
@@ -22,6 +25,7 @@ import { useDiscussionStore } from '../hooks/use-disussion-store';
 import { DiscussionFixedFormWrapper } from './discussion-fixed-form-wrapper';
 
 import { LucideLoaderCircle } from 'lucide-react';
+import { createDiscussionData } from '../types';
 
 const MarkdownToolbar = dynamic(
   () =>
@@ -57,7 +61,7 @@ export const CreateDiscussionForm = () => {
       setText('');
 
       router.push(
-        discussionPath(actionState.data?.discussionId as string)
+        discussionPath(actionState.data?.discussionId ?? '')
       );
     }
   }, [actionState, hideDiscussionForm, router]);

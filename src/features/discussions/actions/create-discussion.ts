@@ -12,6 +12,7 @@ import prisma from '@/lib/prisma';
 import { setCookieByKey } from '@/utils/cookies';
 
 import { z } from 'zod';
+import { createDiscussionData } from '../types';
 
 const createDiscussionSchema = z.object({
   title: z.string().min(1).max(191),
@@ -20,9 +21,9 @@ const createDiscussionSchema = z.object({
 });
 
 export const createDisucssion = async (
-  _actionState: ActionState,
+  _actionState: ActionState<createDiscussionData | undefined>,
   formData: FormData
-) => {
+): Promise<ActionState<createDiscussionData | undefined>> => {
   const { user } = await getAuth();
   if (!user) {
     return toActionState(

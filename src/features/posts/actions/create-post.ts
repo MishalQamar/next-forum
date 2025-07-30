@@ -10,6 +10,7 @@ import { getAuth } from '@/features/auth/actions/get-auth';
 import prisma from '@/lib/prisma';
 
 import { z } from 'zod';
+import { createPostData } from '../types';
 
 const createPostSchema = z.object({
   content: z.string().min(1),
@@ -18,9 +19,9 @@ const createPostSchema = z.object({
 export const createPost = async (
   discussionId: string,
   postId: string | null,
-  _actionState: ActionState,
+  _actionState: ActionState<createPostData | undefined>,
   formData: FormData
-) => {
+): Promise<ActionState<createPostData | undefined>> => {
   const { user } = await getAuth();
   if (!user) {
     return toActionState(

@@ -1,7 +1,7 @@
 import { ActionState } from './utils/to-action-state';
 
 type FieldErrorProps = {
-  actionState: ActionState;
+  actionState: ActionState<unknown>;
   name: string;
 };
 
