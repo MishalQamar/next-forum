@@ -1,3 +1,4 @@
+import { createDiscussionData } from '@/features/discussions/types';
 import { createPostData } from '@/features/posts/types';
 import { ZodError } from 'zod';
 
@@ -7,7 +8,7 @@ export type ActionState = {
   fieldErrors: Record<string, string[] | undefined>;
   status?: 'SUCCESS' | 'ERROR';
   timeStamp: number;
-  data?: createPostData;
+  data?: createPostData | createDiscussionData;
 };
 
 export const EMPTY_ACTION_STATE: ActionState = {
