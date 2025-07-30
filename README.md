@@ -1,4 +1,4 @@
-# Final Forum - Full-Featured Forum Platform
+# Next Forum - Full-Featured Forum Platform
 
 A modern, full-featured forum platform built with **Next.js 15**, featuring React Server Components, Server Actions, and advanced search capabilities. Includes rich markdown editing with syntax highlighting, topic categorization, and mobile-responsive design.
 
