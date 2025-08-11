@@ -15,8 +15,6 @@ const SignInForm = () => {
     EMPTY_ACTION_STATE
   );
 
-  console.log('Sign-in form actionState:', actionState);
-
   return (
     <form action={action} className="space-y-4">
       <GeneralError actionState={actionState} />
