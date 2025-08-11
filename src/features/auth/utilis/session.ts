@@ -6,6 +6,7 @@ import { Session, User } from '@prisma/client';
 
 import { sha256 } from '@oslojs/crypto/sha2';
 import prisma from '@/lib/prisma';
+import crypto from 'crypto';
 
 export function generateSessionToken(): string {
   const bytes = new Uint8Array(20);
@@ -15,7 +16,6 @@ export function generateSessionToken(): string {
     crypto.getRandomValues(bytes);
   } else {
     // Fallback for server-side
-    const crypto = require('crypto');
     const randomBytes = crypto.randomBytes(20);
     bytes.set(randomBytes);
   }
