@@ -25,6 +25,7 @@ import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
 import dynamic from 'next/dynamic';
 
 import { SubmitButton } from '@/components/submit-button';
+import { createPostData } from '../types';
 const MarkdownToolbar = dynamic(
   () =>
     import('@/components/markdown-toolbar').then(
@@ -57,7 +58,8 @@ export const CreatePostForm = () => {
       hidePostForm();
       setText('');
 
-      const { postId, count } = actionState.data;
+      const data = actionState.data as createPostData;
+      const { postId, count } = data;
 
       const page = Math.floor((count - 1) / POSTS_PER_PAGE);
 

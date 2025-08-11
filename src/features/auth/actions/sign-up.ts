@@ -21,19 +21,25 @@ const signUpSchema = z
   .object({
     username: z
       .string()
-      .min(1)
-      .max(191)
+      .min(1, { message: 'Username is required' })
+      .max(191, { message: 'Username must be less than 191 characters' })
       .refine(
         (value) => !value.includes(' '),
         'Username cannot contain spaces'
       ),
     email: z
       .string()
-      .min(1, { message: 'Is required' })
-      .max(191)
-      .email(),
-    password: z.string().min(6).max(191),
-    confirmPassword: z.string().min(6).max(191),
+      .min(1, { message: 'Email is required' })
+      .max(191, { message: 'Email must be less than 191 characters' })
+      .email({ message: 'Please enter a valid email address' }),
+    password: z
+      .string()
+      .min(6, { message: 'Password must be at least 6 characters' })
+      .max(191, { message: 'Password must be less than 191 characters' }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: 'Password confirmation is required' })
+      .max(191, { message: 'Password confirmation must be less than 191 characters' }),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
@@ -48,76 +54,60 @@ const signUpSchema = z
 export const signUp = async (
   _actionState: ActionState,
   formData: FormData
-) => {
-  console.log('signUp started');
-
-  let parsedData;
+): Promise<ActionState> => {
   try {
-    console.log('Parsing form data...');
-    parsedData = signUpSchema.parse(Object.fromEntries(formData));
-    console.log('Parsed data:', parsedData);
-  } catch (parseError) {
-    console.error('Zod validation error:', parseError);
-    return fromErrorToActionState(parseError);
-  }
+    // Parse form data
+    const formDataObj = Object.fromEntries(formData);
+    const { username, email, password } = signUpSchema.parse(formDataObj);
 
-  const { username, email, password } = parsedData;
+    // Hash password
+    const passwordHash = await hashPassword(password);
 
-  let passwordHash;
-  try {
-    console.log('Hashing password...');
-    passwordHash = await hashPassword(password);
-    console.log('Password hashed.');
-  } catch (hashError) {
-    console.error('Error hashing password:', hashError);
-    return fromErrorToActionState(hashError);
-  }
-
-  let user;
-  try {
-    console.log('Creating user in database...');
-    user = await prisma.user.create({
+    // Create user
+    const user = await prisma.user.create({
       data: {
         username,
         email,
         passwordHash,
       },
     });
-    console.log('User created:', user);
-  } catch (dbError) {
-    console.error('Database error:', dbError);
-    if (
-      dbError instanceof Prisma.PrismaClientKnownRequestError &&
-      dbError.code === 'P2002'
-    ) {
-      return toActionState('User or email already exists', 'ERROR');
-    }
-    return fromErrorToActionState(dbError);
-  }
 
-  let sessionToken, session;
-  try {
-    console.log('Generating session token...');
-    sessionToken = generateSessionToken();
-    console.log('Session token generated:', sessionToken);
+    // Create session
+    const sessionToken = generateSessionToken();
+    const session = await createSession(sessionToken, user.id);
 
-    console.log('Creating session...');
-    session = await createSession(sessionToken, user.id);
-    console.log('Session created:', session);
-  } catch (sessionError) {
-    console.error('Session creation error:', sessionError);
-    return fromErrorToActionState(sessionError);
-  }
-
-  try {
-    console.log('Setting session cookie...');
+    // Set session cookie
     await setSessionTokenCookie(sessionToken, session.expiresAt);
-    console.log('Session cookie set.');
-  } catch (cookieError) {
-    console.error('Error setting cookie:', cookieError);
-    return fromErrorToActionState(cookieError);
-  }
 
-  console.log('Redirecting to home path...');
-  redirect(homePath());
+    // Redirect to dashboard - this will throw a NEXT_REDIRECT error
+    redirect(homePath());
+  } catch (error) {
+    // Handle Prisma unique constraint violations
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        const target = error.meta?.target as string[];
+        if (target?.includes('email')) {
+          return toActionState('Email already exists', 'ERROR');
+        }
+        if (target?.includes('username')) {
+          return toActionState('Username already exists', 'ERROR');
+        }
+        return toActionState('Username or email already exists', 'ERROR');
+      }
+    }
+
+    // Handle Zod validation errors
+    if (error instanceof z.ZodError) {
+      return fromErrorToActionState(error, formData);
+    }
+
+    // Handle redirect errors (this is expected behavior)
+    if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
+      throw error; // Re-throw redirect errors
+    }
+
+    // Handle other errors
+    console.error('Sign-up error:', error);
+    return toActionState('An error occurred during sign-up. Please try again.', 'ERROR');
+  }
 };

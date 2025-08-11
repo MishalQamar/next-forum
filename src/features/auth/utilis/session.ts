@@ -9,10 +9,21 @@ import prisma from '@/lib/prisma';
 
 export function generateSessionToken(): string {
   const bytes = new Uint8Array(20);
-  crypto.getRandomValues(bytes);
+  
+  // Use crypto.getRandomValues if available (browser), otherwise use crypto.randomBytes (Node.js)
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+    crypto.getRandomValues(bytes);
+  } else {
+    // Fallback for server-side
+    const crypto = require('crypto');
+    const randomBytes = crypto.randomBytes(20);
+    bytes.set(randomBytes);
+  }
+  
   const token = encodeBase32LowerCaseNoPadding(bytes);
   return token;
 }
+
 export async function createSession(token: string, userId: string) {
   const sessionId = encodeHexLowerCase(
     sha256(new TextEncoder().encode(token))

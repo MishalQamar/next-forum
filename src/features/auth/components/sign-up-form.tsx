@@ -1,12 +1,12 @@
 'use client';
 
+import { FieldError } from '@/components/form/field-error';
+import { GeneralError } from '@/components/form/general-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useActionState } from 'react';
 import { signUp } from '../actions/sign-up';
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
-
-import { FieldError } from '@/components/form/field-error';
 import { SubmitButton } from '@/components/submit-button';
 
 const SignUpForm = () => {
@@ -14,77 +14,78 @@ const SignUpForm = () => {
     signUp,
     EMPTY_ACTION_STATE
   );
+
+  console.log('Sign-up form actionState:', actionState);
+
   return (
-    <form action={action}>
-      <Label
-        htmlFor="username"
-        className="block text-sm font-medium leading-6"
-      >
-        Username
-      </Label>
+    <form action={action} className="space-y-4">
+      <GeneralError actionState={actionState} />
+      
+      <div className="space-y-2">
+        <Label htmlFor="username" className="text-sm font-medium">
+          Username
+        </Label>
+        <Input
+          id="username"
+          name="username"
+          type="text"
+          required
+          autoComplete="username"
+          placeholder="Choose a username"
+          className="w-full"
+        />
+        <FieldError actionState={actionState} name="username" />
+      </div>
 
-      <Input
-        id="username"
-        name="username"
-        type="text"
-        required
-        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 mb-4"
-      />
+      <div className="space-y-2">
+        <Label htmlFor="email" className="text-sm font-medium">
+          Email address
+        </Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          placeholder="Enter your email"
+          className="w-full"
+        />
+        <FieldError actionState={actionState} name="email" />
+      </div>
 
-      <FieldError actionState={actionState} name="username" />
+      <div className="space-y-2">
+        <Label htmlFor="password" className="text-sm font-medium">
+          Password
+        </Label>
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autoComplete="new-password"
+          placeholder="Create a password (min 6 characters)"
+          className="w-full"
+        />
+        <FieldError actionState={actionState} name="password" />
+      </div>
 
-      <Label
-        htmlFor="email"
-        className="block text-sm font-medium leading-6 mt-2"
-      >
-        Email address
-      </Label>
+      <div className="space-y-2">
+        <Label htmlFor="confirmPassword" className="text-sm font-medium">
+          Confirm Password
+        </Label>
+        <Input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          required
+          autoComplete="new-password"
+          placeholder="Confirm your password"
+          className="w-full"
+        />
+        <FieldError actionState={actionState} name="confirmPassword" />
+      </div>
 
-      <Input
-        id="email"
-        name="email"
-        type="email"
-        required
-        autoComplete="email"
-        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 mb-4"
-      />
-
-      <FieldError actionState={actionState} name="email" />
-
-      <Label
-        htmlFor="password"
-        className="block text-sm font-medium leading-6 mt-2"
-      >
-        Password
-      </Label>
-
-      <Input
-        id="password"
-        name="password"
-        type="password"
-        required
-        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 mb-4 "
-      />
-
-      <FieldError actionState={actionState} name="password" />
-
-      <Label
-        htmlFor="confirmPassword"
-        className="block text-sm font-medium leading-6 mt-2"
-      >
-        ConfirmPassword
-      </Label>
-
-      <Input
-        id="confirmPassword"
-        name="confirmPassword"
-        type="password"
-        required
-        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 mb-4 "
-      />
-
-      <FieldError actionState={actionState} name="confirmPassword" />
-      <SubmitButton label="Sign Up" />
+      <SubmitButton label="Sign Up" className="w-full" />
     </form>
   );
 };

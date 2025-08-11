@@ -1,12 +1,10 @@
 'use client';
 
 import { FieldError } from '@/components/form/field-error';
-
+import { GeneralError } from '@/components/form/general-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
 import { useActionState } from 'react';
-
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
 import { signIn } from '../actions/sign-in';
 import { SubmitButton } from '@/components/submit-button';
@@ -16,45 +14,46 @@ const SignInForm = () => {
     signIn,
     EMPTY_ACTION_STATE
   );
+
+  console.log('Sign-in form actionState:', actionState);
+
   return (
-    <form action={action}>
-      <Label
-        htmlFor="email"
-        className="block text-sm font-medium leading-6"
-      >
-        Email address
-      </Label>
-
-      <Input
-        id="email"
-        name="email"
-        type="email"
-        required
-        autoComplete="email"
-        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 mt-2"
-      />
-      <FieldError actionState={actionState} name="email" />
-
-      <div className="flex items-center justify-between mt-2">
-        <Label
-          htmlFor="password"
-          className="block text-sm font-medium leading-6 mt-2"
-        >
-          Password
+    <form action={action} className="space-y-4">
+      <GeneralError actionState={actionState} />
+      
+      <div className="space-y-2">
+        <Label htmlFor="email" className="text-sm font-medium">
+          Email address
         </Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          placeholder="Enter your email"
+          className="w-full"
+        />
+        <FieldError actionState={actionState} name="email" />
       </div>
 
-      <Input
-        id="password"
-        name="password"
-        type="password"
-        required
-        className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6 mt-2 "
-      />
+      <div className="space-y-2">
+        <Label htmlFor="password" className="text-sm font-medium">
+          Password
+        </Label>
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autoComplete="current-password"
+          placeholder="Enter your password"
+          className="w-full"
+        />
+        <FieldError actionState={actionState} name="password" />
+      </div>
 
-      <FieldError actionState={actionState} name="password" />
-
-      <SubmitButton label="Sign In" />
+      <SubmitButton label="Sign In" className="w-full" />
     </form>
   );
 };

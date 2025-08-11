@@ -5,10 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { FieldError } from '@/components/form/field-error';
-import {
-  ActionState,
-  EMPTY_ACTION_STATE,
-} from '@/components/form/utils/to-action-state';
+import { EMPTY_ACTION_STATE } from '@/components/form/utils/to-action-state';
 import { useActionState, useEffect, useRef, useState } from 'react';
 import { createDisucssion } from '../actions/create-discussion';
 import dynamic from 'next/dynamic';
@@ -60,9 +57,10 @@ export const CreateDiscussionForm = () => {
       hideDiscussionForm();
       setText('');
 
-      router.push(
-        discussionPath(actionState.data?.discussionId ?? '')
-      );
+      const data = actionState.data as createDiscussionData;
+      if (data?.discussionId) {
+        router.push(discussionPath(data.discussionId));
+      }
     }
   }, [actionState, hideDiscussionForm, router]);
 

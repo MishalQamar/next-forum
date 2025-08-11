@@ -17,6 +17,7 @@ type SubmitButtonProps = {
     | 'ghost'
     | 'link';
   size?: 'default' | 'sm' | 'lg' | 'icon';
+  className?: string;
 };
 
 const SubmitButton = ({
@@ -24,6 +25,7 @@ const SubmitButton = ({
   icon,
   variant = 'default',
   size = 'default',
+  className,
 }: SubmitButtonProps) => {
   const { pending } = useFormStatus();
 
@@ -33,6 +35,7 @@ const SubmitButton = ({
       type="submit"
       variant={variant}
       size={size}
+      className={className}
     >
       {pending && (
         <LucideLoaderCircle

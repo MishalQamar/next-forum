@@ -19,9 +19,12 @@ export const FixedFormWrapper = ({
 }: FixedFormWrapperProps) => {
   return (
     <div
+      data-fixed-form
       className={clsx(
-        'fixed bottom-0 left-0 right-0 w-full z-50 p-6 m-0 border-t border-gray-100 space-y-3 overflow-hidden rounded-t-[10px] bg-white text-sm font-medium shadow-sm outline-none',
-        visible ? 'block' : 'hidden'
+        'fixed bottom-0 left-0 right-0 w-full z-50 p-6 m-0 border-t border-gray-100 space-y-3 overflow-hidden rounded-t-[10px] bg-white text-sm font-medium shadow-sm outline-none transition-all duration-300 ease-in-out transform',
+        visible 
+          ? 'translate-y-0 opacity-100' 
+          : 'translate-y-full opacity-0 pointer-events-none'
       )}
     >
       <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
