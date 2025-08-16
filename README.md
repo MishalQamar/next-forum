@@ -1,4 +1,4 @@
-# 🚀 Final Forum - Full-Stack Forum Platform
+#  Forum - Full-Stack Forum Platform
 
 > **A production-ready forum platform showcasing modern web development with Next.js 15, TypeScript, and advanced features**
 
